@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { CustomDatePickerWithPopover } from '@/components/ui/custom-date-picker';
+import { CustomDatePickerWithPopover } from '../../../../components/ui/custom-date-picker';
 
 export default function AnnualLeaveCalculator() {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
