@@ -97,6 +97,7 @@ export function CustomDatePickerWithPopover({
               </button>
               <div className="flex items-center">
                 <select
+                  aria-label="년도 선택"
                   value={date.getFullYear()}
                   onChange={({ target: { value } }) => changeYear(Number(value))}
                   className="mx-1 p-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -108,6 +109,7 @@ export function CustomDatePickerWithPopover({
                   ))}
                 </select>
                 <select
+                  aria-label="월 선택"
                   value={date.getMonth()}
                   onChange={({ target: { value } }) => changeMonth(Number(value))}
                   className="mx-1 p-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
