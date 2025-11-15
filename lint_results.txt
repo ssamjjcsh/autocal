@@ -1,0 +1,144 @@
+
+> allincalc@0.1.0 lint
+> eslint
+
+
+C:\allincalc\src\app\calculators\material\comparison\page.tsx
+    4:19  warning  'Download' is defined but never used                    @typescript-eslint/no-unused-vars
+    4:29  warning  'RotateCcw' is defined but never used                   @typescript-eslint/no-unused-vars
+    6:10  warning  'Badge' is defined but never used                       @typescript-eslint/no-unused-vars
+    7:41  warning  'CardTitle' is defined but never used                   @typescript-eslint/no-unused-vars
+    8:10  warning  'Table' is defined but never used                       @typescript-eslint/no-unused-vars
+    8:17  warning  'TableBody' is defined but never used                   @typescript-eslint/no-unused-vars
+    8:28  warning  'TableCell' is defined but never used                   @typescript-eslint/no-unused-vars
+    8:39  warning  'TableHead' is defined but never used                   @typescript-eslint/no-unused-vars
+    8:50  warning  'TableHeader' is defined but never used                 @typescript-eslint/no-unused-vars
+    8:63  warning  'TableRow' is defined but never used                    @typescript-eslint/no-unused-vars
+   10:10  warning  'Switch' is defined but never used                      @typescript-eslint/no-unused-vars
+   11:10  warning  'Tabs' is defined but never used                        @typescript-eslint/no-unused-vars
+   11:16  warning  'TabsContent' is defined but never used                 @typescript-eslint/no-unused-vars
+   11:29  warning  'TabsList' is defined but never used                    @typescript-eslint/no-unused-vars
+   11:39  warning  'TabsTrigger' is defined but never used                 @typescript-eslint/no-unused-vars
+   13:10  warning  'translateDescription' is defined but never used        @typescript-eslint/no-unused-vars
+   17:11  warning  'MakeItFromMaterial' is defined but never used          @typescript-eslint/no-unused-vars
+   31:11  warning  'MaterialItem' is defined but never used                @typescript-eslint/no-unused-vars
+  429:39  warning  'majorKey' is defined but never used                    @typescript-eslint/no-unused-vars
+  430:44  warning  'middleKey' is defined but never used                   @typescript-eslint/no-unused-vars
+  436:49  warning  'subKey' is defined but never used                      @typescript-eslint/no-unused-vars
+  469:9   warning  'composition' is never reassigned. Use 'const' instead  prefer-const
+  515:9   warning  'composition' is never reassigned. Use 'const' instead  prefer-const
+  558:9   warning  'handleClearAll' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  563:9   warning  'handleDownload' is assigned a value but never used     @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\app\calculators\material\corrosion\page.tsx
+     5:10  warning  'Card' is defined but never used                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+     5:16  warning  'CardContent' is defined but never used                                                                                                                                                                          @typescript-eslint/no-unused-vars
+     5:29  warning  'CardHeader' is defined but never used                                                                                                                                                                           @typescript-eslint/no-unused-vars
+     5:41  warning  'CardTitle' is defined but never used                                                                                                                                                                            @typescript-eslint/no-unused-vars
+     7:10  warning  'Button' is defined but never used                                                                                                                                                                               @typescript-eslint/no-unused-vars
+     9:10  warning  'Badge' is defined but never used                                                                                                                                                                                @typescript-eslint/no-unused-vars
+    10:10  warning  'Search' is defined but never used                                                                                                                                                                               @typescript-eslint/no-unused-vars
+    10:61  warning  'ChevronDown' is defined but never used                                                                                                                                                                          @typescript-eslint/no-unused-vars
+    94:10  warning  'selectedMaterials' is assigned a value but never used                                                                                                                                                           @typescript-eslint/no-unused-vars
+    94:29  warning  'setSelectedMaterials' is assigned a value but never used                                                                                                                                                        @typescript-eslint/no-unused-vars
+   131:10  warning  'dynamicWidths' is assigned a value but never used                                                                                                                                                               @typescript-eslint/no-unused-vars
+   143:9   warning  'multiChemicalConcentrations' is assigned a value but never used                                                                                                                                                 @typescript-eslint/no-unused-vars
+   166:9   warning  The 'sortMaterialsByPriority' function makes the dependencies of useMemo Hook (at line 441) change on every render. To fix this, wrap the definition of 'sortMaterialsByPriority' in its own useCallback() Hook  react-hooks/exhaustive-deps
+   313:9   warning  The 'materialNameMap' object makes the dependencies of useMemo Hook (at line 441) change on every render. To fix this, wrap the initialization of 'materialNameMap' in its own useMemo() Hook                    react-hooks/exhaustive-deps
+   466:6   warning  React Hook useMemo has a missing dependency: 'materialNameMap'. Either include it or remove the dependency array                                                                                                 react-hooks/exhaustive-deps
+   477:9   warning  'temperatureInfo' is never reassigned. Use 'const' instead                                                                                                                                                       prefer-const
+   481:54  warning  'index' is defined but never used                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   627:6   warning  React Hook useMemo has missing dependencies: 'materialNameMap' and 'sortMaterialsByPriority'. Either include them or remove the dependency array                                                                 react-hooks/exhaustive-deps
+   647:6   warning  React Hook useMemo has a missing dependency: 'materialNameMap'. Either include it or remove the dependency array                                                                                                 react-hooks/exhaustive-deps
+   654:6   warning  React Hook useEffect has a missing dependency: 'calculateOptimalWidths'. Either include it or remove the dependency array                                                                                        react-hooks/exhaustive-deps
+   657:9   warning  'specificCompatibility' is assigned a value but never used                                                                                                                                                       @typescript-eslint/no-unused-vars
+   853:9   warning  'currentNumericPart' is assigned a value but never used                                                                                                                                                          @typescript-eslint/no-unused-vars
+  1575:76  warning  'description' is defined but never used                                                                                                                                                                          @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\app\calculators\science\kinetic-energy-calculator\page.tsx
+  7:10  warning  'Card' is defined but never used         @typescript-eslint/no-unused-vars
+  7:16  warning  'CardContent' is defined but never used  @typescript-eslint/no-unused-vars
+  7:29  warning  'CardHeader' is defined but never used   @typescript-eslint/no-unused-vars
+  7:41  warning  'CardTitle' is defined but never used    @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\app\page.tsx
+  5:10  warning  'calculatorCategories' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\app\settings\page.tsx
+  8:10  warning  'toast' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\calculator\PumpPowerCalculator.tsx
+   6:10  warning  'Button' is defined but never used                                                                                     @typescript-eslint/no-unused-vars
+  67:6   warning  React Hook useEffect has a missing dependency: 'calculatePumpPower'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\allincalc\src\components\calculators\CalculatorSearch.tsx
+  3:10  warning  'Input' is defined but never used                @typescript-eslint/no-unused-vars
+  4:10  warning  'MagnifyingGlassIcon' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\calculators\ScientificCalculator.tsx
+  109:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\engineering-calculator\NPSHCalculator.tsx
+  301:9  warning  'handleTemperatureChange' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\engineering-calculator\PumpPowerCalculator.tsx
+   1:40  warning  'useEffect' is defined but never used                  @typescript-eslint/no-unused-vars
+  11:60  warning  'setCalculationExplanation' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\engineering-calculator\TankCalculator.tsx
+  121:9   warning  'convertUnit' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  138:11  warning  'radius1' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  139:11  warning  'radius2' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  142:11  warning  'topDiameter' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  143:11  warning  'bottomDiameter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  144:11  warning  'cylinderHeight' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  227:17  warning  'd' is assigned a value but never used               @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\material\MaterialProperties.tsx
+  45:3   warning  'allMaterials' is defined but never used           @typescript-eslint/no-unused-vars
+  50:21  warning  'setIsLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\components\ui\chart.tsx
+  72:11  warning  'name' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\data\calculators.ts
+  1:10   warning  'BarChart' is defined but never used        @typescript-eslint/no-unused-vars
+  1:20   warning  'Waves' is defined but never used           @typescript-eslint/no-unused-vars
+  1:27   warning  'Factory' is defined but never used         @typescript-eslint/no-unused-vars
+  1:36   warning  'Droplets' is defined but never used        @typescript-eslint/no-unused-vars
+  1:60   warning  'Dna' is defined but never used             @typescript-eslint/no-unused-vars
+  1:65   warning  'Leaf' is defined but never used            @typescript-eslint/no-unused-vars
+  1:71   warning  'Brain' is defined but never used           @typescript-eslint/no-unused-vars
+  1:78   warning  'TestTube' is defined but never used        @typescript-eslint/no-unused-vars
+  1:102  warning  'CalculatorIcon' is defined but never used  @typescript-eslint/no-unused-vars
+  1:126  warning  'Wind' is defined but never used            @typescript-eslint/no-unused-vars
+  1:137  warning  'Cloud' is defined but never used           @typescript-eslint/no-unused-vars
+  1:144  warning  'Zap' is defined but never used             @typescript-eslint/no-unused-vars
+  1:149  warning  'Flame' is defined but never used           @typescript-eslint/no-unused-vars
+  1:180  warning  'Square' is defined but never used          @typescript-eslint/no-unused-vars
+  1:188  warning  'Triangle' is defined but never used        @typescript-eslint/no-unused-vars
+  1:198  warning  'Circle' is defined but never used          @typescript-eslint/no-unused-vars
+  1:206  warning  'Sigma' is defined but never used           @typescript-eslint/no-unused-vars
+  1:222  warning  'Divide' is defined but never used          @typescript-eslint/no-unused-vars
+  1:230  warning  'Plus' is defined but never used            @typescript-eslint/no-unused-vars
+  1:236  warning  'Minus' is defined but never used           @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\hooks\use-throttled-callback.ts
+  23:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+C:\allincalc\src\hooks\use-unmount.ts
+  8:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+C:\allincalc\src\utils\calculations.ts
+  310:41  warning  'singleBoxVolumeM3' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\allincalc\src\utils\csvParser.ts
+  162:15  warning  'key' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  173:14  warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\allincalc\tailwind.config.js
+  2:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+??98 problems (0 errors, 98 warnings)
+  0 errors and 5 warnings potentially fixable with the `--fix` option.
+

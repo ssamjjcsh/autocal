@@ -64,6 +64,21 @@ export interface AffinityCalculationInput {
   p1: number;
 }
 
+export interface ContainerSpec {
+  height: string;
+  tare: number;
+  payload: number;
+  maxGross: number;
+  maxWeightKg: number;
+  doorOpeningWidth: string;
+  doorOpeningHeight: string;
+  interiorLength: string;
+  interiorWidth: string;
+  interiorHeight: string;
+  maxVolumeM3: number;
+  internalHeightM: number;
+}
+
 // ==================== 재질별 밀도 (kg/m³) ====================
 const MATERIAL_DENSITIES = {
   carbon: 7850,      // 탄소강
@@ -77,7 +92,7 @@ const MATERIAL_DENSITIES = {
 };
 
 // ==================== 컨테이너 정보 ====================
-export const CONTAINER_SPECS = {
+export const CONTAINER_SPECS: Record<string, ContainerSpec> = {
   '20ft': {
     height: "8'6\"",
     tare: 2200,
@@ -302,7 +317,7 @@ export function calculateRequiredContainers(input: ContainerCalculationInput): C
 
   const USAGE_RATE = 0.85; // 실제 적재율 (85%)
 
-  for (const containerType in CONTAINER_SPECS) {
+  for (const containerType of Object.keys(CONTAINER_SPECS) as Array<keyof ContainerCalculationResult>) {
     const spec = CONTAINER_SPECS[containerType as keyof typeof CONTAINER_SPECS];
 
     // 부피 기준 필요한 컨테이너 수
@@ -313,7 +328,7 @@ export function calculateRequiredContainers(input: ContainerCalculationInput): C
     // 더 큰 값으로 필요한 컨테이너 수 결정 (올림)
     const requiredContainers = Math.ceil(Math.max(containersByVolume, containersByWeight));
 
-    results[containerType as keyof typeof CONTAINER_SPECS].singleStack = requiredContainers;
+    results[containerType].singleStack = requiredContainers;
 
     // 2단 적재 가능 여부 확인 (박스 높이가 컨테이너 내부 높이의 절반 이하)
     if (singleBoxHeightM > 0 && singleBoxHeightM * 2 <= spec.internalHeightM) {
@@ -322,9 +337,9 @@ export function calculateRequiredContainers(input: ContainerCalculationInput): C
       // 2단 적재 시 필요한 컨테이너 수 (중량 기준)
       const doubleStackContainersByWeight = totalWeightKg / spec.maxWeightKg;
 
-      results[containerType as keyof typeof CONTAINER_SPECS].doubleStack = Math.ceil(Math.max(doubleStackContainersByVolume, doubleStackContainersByWeight));
+      results[containerType].doubleStack = Math.ceil(Math.max(doubleStackContainersByVolume, doubleStackContainersByWeight));
     } else {
-      results[containerType as keyof typeof CONTAINER_SPECS].doubleStack = 0; // 2단 적재 불가능 시 0
+      results[containerType as keyof ContainerCalculationResult].doubleStack = 0; // 2단 적재 불가능 시 0
     }
   }
 

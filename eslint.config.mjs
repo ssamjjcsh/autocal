@@ -26,6 +26,7 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-vars": "warn",
       "prefer-const": "warn",
       "react-hooks/exhaustive-deps": "warn",
+      "import/no-anonymous-default-export": ["error", { "allowObject": true }],
     },
   },
 ];

@@ -1,13 +1,10 @@
 'use client';
 
-import React, { Suspense, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PumpPowerCalculator from '@/components/engineering-calculator/PumpPowerCalculator';
 import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
 
 export default function PumpPowerCalculatorPage() {
-  const [shaftPower, setShaftPower] = useState<number | undefined>(undefined);
-  const [motorPower, setMotorPower] = useState<number | undefined>(undefined);
-  const [calculationExplanation, setCalculationExplanation] = useState<string | null>(null);
   const [displayedShaftPower, setDisplayedShaftPower] = useState<number | undefined>(undefined);
   const [displayedMotorPower, setDisplayedMotorPower] = useState<number | undefined>(undefined);
   const [displayedCalculationExplanation, setDisplayedCalculationExplanation] = useState<string | null>(null);
@@ -25,7 +22,7 @@ export default function PumpPowerCalculatorPage() {
       inputSection={
         <PumpPowerCalculator
           onCalculate={handleCalculate}
-          setCalculationExplanation={setCalculationExplanation}
+          setCalculationExplanation={setDisplayedCalculationExplanation}
         />
       }
       resultSection={

@@ -73,7 +73,7 @@ const AnniversaryCalculator = () => {
             <label htmlFor="baseDate" className="w-24">날짜:</label>
             <CustomDatePickerWithPopover
               date={new Date(baseDate)}
-              setDate={(date) => setBaseDate(date.toISOString().split('T')[0])}
+              setDate={(date) => date && setBaseDate(date.toISOString().split('T')[0])}
             />
           </div>
         </TabsContent>
@@ -82,7 +82,7 @@ const AnniversaryCalculator = () => {
         <label htmlFor="todayDate" className="w-24">오늘 날짜:</label>
         <CustomDatePickerWithPopover
           date={new Date(todayDate)}
-          setDate={(date) => setTodayDate(date.toISOString().split('T')[0])}
+          setDate={(date) => date && setTodayDate(date.toISOString().split('T')[0])}
         />
       </div>
       <div className="flex space-x-2">

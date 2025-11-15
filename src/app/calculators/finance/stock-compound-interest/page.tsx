@@ -166,7 +166,7 @@ export default function StockCompoundInterestCalculator() {
           <li><strong>연 수익률:</strong> 기대하는 연간 투자 수익률을 % 단위로 입력합니다.</li>
           <li><strong>투자 기간:</strong> 투자를 지속할 기간을 년 단위로 입력합니다.</li>
         </ul>
-        <p className="mt-2">'계산하기' 버튼을 클릭하면 기간별 투자 원금, 평가 금액, 수익금 및 수익률이 표로 제공됩니다.</p>
+        <p className="mt-2">&apos;계산하기&apos; 버튼을 클릭하면 기간별 투자 원금, 평가 금액, 수익금 및 수익률이 표로 제공됩니다.</p>
       </>
     )
   };

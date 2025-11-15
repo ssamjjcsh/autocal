@@ -19,7 +19,6 @@ const nextConfig = {
     NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN: process.env.NEXT_PUBLIC_UPSTASH_REDIS_REST_TOKEN,
   },
   output: 'standalone',
-  outputFileTracingRoot: path.join(__dirname, './'),
 
   webpack: (config) => {
     config.resolve.alias = {

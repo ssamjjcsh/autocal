@@ -33,9 +33,9 @@ const PumpPowerCalculator = () => {
   const [head, setHead] = useState<number | ''>(10);
   const [fluidDensity, setFluidDensity] = useState<number | ''>(1000);
   const [pumpEfficiency, setPumpEfficiency] = useState<number | ''>(70);
-  const [flowRateUnit, setFlowRateUnit] = useState<string>('m³/h');
-  const [headUnit, setHeadUnit] = useState<string>('m');
-  const [densityUnit, setDensityUnit] = useState<string>('kg/m³');
+  const [flowRateUnit, setFlowRateUnit] = useState<keyof typeof unitConversions.flow>('m³/h');
+  const [headUnit, setHeadUnit] = useState<keyof typeof unitConversions.head>('m');
+  const [densityUnit, setDensityUnit] = useState<keyof typeof unitConversions.density>('kg/m³');
   const [calculatedPower, setCalculatedPower] = useState<number | null>(null);
 
   const calculatePumpPower = () => {
@@ -83,7 +83,7 @@ const PumpPowerCalculator = () => {
                 onChange={(e) => setFlowRate(parseFloat(e.target.value) || '')}
                 placeholder="유량 입력"
               />
-              <Select value={flowRateUnit} onValueChange={setFlowRateUnit}>
+              <Select value={flowRateUnit} onValueChange={(value) => setFlowRateUnit(value as keyof typeof unitConversions.flow)}>
                 <SelectTrigger className="w-[100px]">
                   <SelectValue placeholder="단위" />
                 </SelectTrigger>
@@ -108,7 +108,7 @@ const PumpPowerCalculator = () => {
                 onChange={(e) => setHead(parseFloat(e.target.value) || '')}
                 placeholder="양정 입력"
               />
-              <Select value={headUnit} onValueChange={setHeadUnit}>
+              <Select value={headUnit} onValueChange={(value) => setHeadUnit(value as keyof typeof unitConversions.head)}>
                 <SelectTrigger className="w-[100px]">
                   <SelectValue placeholder="단위" />
                 </SelectTrigger>
@@ -133,7 +133,7 @@ const PumpPowerCalculator = () => {
                 onChange={(e) => setFluidDensity(parseFloat(e.target.value) || '')}
                 placeholder="유체 밀도 입력"
               />
-              <Select value={densityUnit} onValueChange={setDensityUnit}>
+              <Select value={densityUnit} onValueChange={(value) => setDensityUnit(value as keyof typeof unitConversions.density)}>
                 <SelectTrigger className="w-[100px]">
                   <SelectValue placeholder="단위" />
                 </SelectTrigger>

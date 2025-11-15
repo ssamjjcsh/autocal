@@ -248,7 +248,7 @@ const ScientificCalculator: React.FC = () => {
   };
 
   const getButtonClass = (button: string, span: number = 1) => {
-    const baseClass = `w-full h-12 text-lg font-bold m-1`;
+        const baseClass = `w-full h-10 text-xs font-bold m-1 truncate`;
     const spanClass = span > 1 ? `col-span-${span}` : '';
 
     const scientificButtons = ['sin', 'cos', 'tan', 'sin⁻¹', 'cos⁻¹', 'tan⁻¹', 'π', 'e', 'xʸ', 'x³', 'x²', 'eˣ', '10ˣ', 'ʸ√x', '³√x', '√x', 'ln', 'log'];
@@ -285,7 +285,7 @@ const ScientificCalculator: React.FC = () => {
 
   return (
     <Card className="h-full">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <div className="flex items-center space-x-4 mb-4">
           <RadioGroup defaultValue="deg" className="flex" onValueChange={setMode}>
             <div className="flex items-center space-x-2">
@@ -312,7 +312,7 @@ const ScientificCalculator: React.FC = () => {
           type="text"
           readOnly
           value={display}
-          className="w-full h-16 text-4xl text-right mb-4 pr-4 bg-gray-100 rounded-md"
+          className="w-full h-12 text-3xl text-right mb-4 pr-4 bg-gray-100 rounded-md"
         />
         <div className="grid grid-cols-10 gap-1">
           {buttonLayout.flat().map((button, index) => {

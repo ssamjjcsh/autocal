@@ -45,6 +45,10 @@ const ChartTooltipContent = React.forwardRef<
     indicator?: "line" | "dot" | "dashed"
     nameKey?: string
     labelKey?: string
+    payload?: Array<{ name: string; value: any; color?: string; payload?: any }>
+    className?: string
+    label?: string | number
+    color?: string
   }
 >((
   {
@@ -137,10 +141,10 @@ const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     hideIcon?: boolean
-    payload?: RechartsPrimitive.LegendPayload
+    payload?: RechartsPrimitive.LegendPayload[]
   }
 >(({ className, hideIcon = false, payload }, ref) => {
-  if (!payload || !payload.length) {
+  if (!payload || !Array.isArray(payload) || !payload.length) {
     return null
   }
 

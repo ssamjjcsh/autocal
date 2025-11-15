@@ -29,7 +29,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
   inputSection,
   resultSection,
   infoSection,
-}) => {
+}: CalculatorsLayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -66,7 +66,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
   ];
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-4">
+    <div className="w-full max-w-5xl mx-auto px-4">
       <div className="text-center mb-6 relative">
         <Button
           variant="outline"

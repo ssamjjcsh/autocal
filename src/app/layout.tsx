@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-y-scroll">
       <head>
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
           <Script

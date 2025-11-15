@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   MagnifyingGlassIcon,
@@ -85,9 +86,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-3">
-          <div className="w-20 h-12 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-full flex items-center justify-center shadow-md">
-            <span className="text-white font-bold text-lg">AICalc</span>
-          </div>
+          <Image src="/logo/allincalc5.png" alt="AllinCalc Logo" width={60} height={18} />
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">All-in-Calc</h1>
         </Link>
 
@@ -174,7 +173,7 @@ const Header: React.FC = () => {
                 className={`text-base font-medium transition-colors px-3 py-1 rounded-md ${
                   isActive
                     ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    : 'text-black hover:text-foreground hover:bg-muted'
                 }`}
               >
                 {item.name}

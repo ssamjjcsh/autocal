@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChartBarIcon, PlayIcon, CodeBracketIcon } from '@heroicons/react/24/outline';
 import { toast } from 'sonner';
-import { clearRedisCache } from './actions';
 
 // ⛔️ 여기를 본인의 GitHub 저장소 주소로 꼭 변경해주세요!
 const GITHUB_REPO_URL = "https://github.com/your-username/materials-dashboard";
@@ -52,6 +51,7 @@ const SettingsPage: React.FC = () => {
             <CardHeader><CardTitle>캐시 관리</CardTitle></CardHeader>
             <CardContent>
               <p className="mb-4">애플리케이션의 캐시 데이터를 관리합니다. 캐시를 초기화하면 최신 데이터를 다시 불러옵니다.</p>
+              {/*
               <Button onClick={async () => {
                 const result = await clearRedisCache();
                 if (result.success) {
@@ -62,6 +62,7 @@ const SettingsPage: React.FC = () => {
               }}>
                 <ChartBarIcon className="w-4 h-4 mr-2" />캐시 완전 초기화
               </Button>
+              */}
             </CardContent>
           </Card>
         </div>

@@ -64,8 +64,8 @@ const RetirementCalculator: NextPage = () => {
 
     if (daysOfEmployment < 365) {
       toast.info('근무 기간이 1년 미만인 경우 퇴직금 지급 대상이 아닙니다.');
-      setSeverancePay('0');
-      setDailyAverageWage('0');
+      setSeverancePay(0);
+      setDailyAverageWage(0);
       setIsCalculated(true);
       return;
     }

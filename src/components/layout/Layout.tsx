@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       <div className="flex">
         <LeftAdRail />
-        <main className="flex-1 px-3 py-3 sm:px-5 lg:px-7 overflow-y-auto overflow-x-hidden max-w-7xl mx-auto xl:ml-64 xl:mr-64">
+        <main className="flex-1 px-3 py-3 sm:px-5 lg:px-7 overflow-y-auto overflow-x-hidden max-w-5xl mx-auto">
           {children}
         </main>
         <RightAdRail />

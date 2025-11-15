@@ -57,11 +57,16 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
             '1월', '2월', '3월', '4월', '5월', '6월',
             '7월', '8월', '9월', '10월', '11월', '12월'
           ][n],
-          weekday: (n) => ['일', '월', '화', '수', '목', '금', '토'][n],
-          weekdayLong: (n) => ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][n]
+          day: (n) => ['일', '월', '화', '수', '목', '금', '토'][n],
+          ordinalNumber: (n) => `${n}번째`,
+          era: (n) => ['기원전', '서기'][n],
+          quarter: (n) => `${n + 1}분기`,
+          dayPeriod: (period) => period === 'am' ? '오전' : '오후',
         },
         formatLong: {
-          date: () => 'yyyy년 MM월 dd일'
+          date: () => 'yyyy년 MM월 dd일',
+          time: () => 'HH시 mm분',
+          dateTime: () => 'yyyy년 MM월 dd일 HH시 mm분',
         }
       }}
       {...props}

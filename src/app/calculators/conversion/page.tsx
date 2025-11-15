@@ -23,17 +23,18 @@ const NewUnitConverter = ({ category }: { category: string }) => {
     return Object.keys(categoryData.units);
   }, [categoryData]);
 
-  if (!categoryData) return <p>정의되지 않은 단위 카테고리입니다.</p>;
-
-  const [fromUnit, setFromUnit] = useState(units[0]);
+  const [fromUnit, setFromUnit] = useState('');
   const [fromValue, setFromValue] = useState('1');
   const [convertedValues, setConvertedValues] = useState<{[key: string]: number}>({});
 
   useEffect(() => {
-    setFromUnit(units[0]);
-  }, [units]);
+    if (categoryData) {
+      setFromUnit(units[0]);
+    }
+  }, [units, categoryData]);
 
   useEffect(() => {
+    if (!categoryData) return;
     const value = parseFloat(fromValue);
     if (!isNaN(value)) {
       const newValues: {[key: string]: number} = {};
@@ -44,7 +45,9 @@ const NewUnitConverter = ({ category }: { category: string }) => {
     } else {
       setConvertedValues({});
     }
-  }, [fromValue, fromUnit, category, units]);
+  }, [fromValue, fromUnit, category, units, categoryData]);
+
+  if (!categoryData) return <p>정의되지 않은 단위 카테고리입니다.</p>;
 
   return (
     <div>

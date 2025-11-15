@@ -46,7 +46,7 @@ const CompoundInterestCalculator: NextPage = () => {
   const [years, setYears] = useState<number>(10)
   const [contribution, setContribution] = useState<number>(0)
   const [compounding, setCompounding] = useState<number>(12) // Monthly
-  const [view, setView] = useState('chart')
+  const [view, setView] = useState('table')
 
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -54,7 +54,7 @@ const CompoundInterestCalculator: NextPage = () => {
     setter(isNaN(parsedValue) ? 0 : parsedValue);
   };
 
-  const { futureValue, totalInterest, totalPrincipal, chartData, error } = useMemo(() => {
+  const { futureValue, totalInterest, totalPrincipal, totalInvestment, interestRateOnPrincipal, interestRateOnFutureValue, chartData, error } = useMemo(() => {
     const p = principal;
     const r = rate / 100;
     const t = years;
@@ -76,8 +76,12 @@ const CompoundInterestCalculator: NextPage = () => {
         fv += c * ((Math.pow(1 + r / n, n * t) - 1) / (r / n));
     }
 
-    const finalTotalPrincipal = p + (c * 12 * t); // 월납입액 기준
+    const finalTotalPrincipal = p + (c * n * t); // 월납입액 기준이 아닌, 총 납입 횟수 기준
     const finalTotalInterest = fv - finalTotalPrincipal;
+
+    const totalInvestment = p + (c * n * t);
+    const interestRateOnPrincipal = (finalTotalInterest / p) * 100;
+    const interestRateOnFutureValue = (finalTotalInterest / fv) * 100;
 
     const data = Array.from({ length: t + 1 }, (_, i) => {
       const year = i;
@@ -95,6 +99,9 @@ const CompoundInterestCalculator: NextPage = () => {
       futureValue: Math.round(fv),
       totalInterest: Math.round(finalTotalInterest),
       totalPrincipal: Math.round(finalTotalPrincipal),
+      totalInvestment: Math.round(totalInvestment),
+      interestRateOnPrincipal: interestRateOnPrincipal,
+      interestRateOnFutureValue: interestRateOnFutureValue,
       chartData: data,
       error: null
     };
@@ -103,7 +110,7 @@ const CompoundInterestCalculator: NextPage = () => {
   const handleCalculate = useCallback(() => {
     if (error) {
       toast.error(error)
-    } else if (futureValue !== null) {
+    } else if (futureValue !== null && totalInvestment !== null && interestRateOnPrincipal !== null && interestRateOnFutureValue !== null) {
       toast.success('복리 계산이 완료되었습니다.')
     }
   }, [futureValue, error]);
@@ -176,7 +183,7 @@ const CompoundInterestCalculator: NextPage = () => {
 
   const resultSection = (
     <div className="flex flex-col justify-center h-full space-y-4">
-      {futureValue !== null && totalInterest !== null && totalPrincipal !== null ? (
+      {futureValue !== null && totalInterest !== null && totalPrincipal !== null && totalInvestment !== null && interestRateOnPrincipal !== null && interestRateOnFutureValue !== null ? (
         <>
           <div className="text-center">
             <p className="text-sm text-muted-foreground">미래 총 자산</p>
@@ -188,13 +195,27 @@ const CompoundInterestCalculator: NextPage = () => {
               <p className="font-semibold">{totalPrincipal.toLocaleString()}원</p>
             </div>
             <div>
+              <p className="text-sm text-muted-foreground">총 투자 원금</p>
+              <p className="font-semibold">{totalInvestment.toLocaleString()}원</p>
+            </div>
+            <div>
               <p className="text-sm text-muted-foreground">총 이자</p>
               <p className="font-semibold">{totalInterest.toLocaleString()}원</p>
             </div>
           </div>
+          <div className="flex justify-around text-center">
+            <div>
+              <p className="text-sm text-muted-foreground">원금 대비 총 이자율</p>
+              <p className="font-semibold">{interestRateOnPrincipal.toFixed(2)}%</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">미래 총 자산 대비 이자 비율</p>
+              <p className="font-semibold">{interestRateOnFutureValue.toFixed(2)}%</p>
+            </div>
+          </div>
           <ToggleGroup type="single" value={view} onValueChange={setView} className="justify-center pt-4">
-            <ToggleGroupItem value="chart">차트</ToggleGroupItem>
             <ToggleGroupItem value="table">표</ToggleGroupItem>
+          <ToggleGroupItem value="chart">차트</ToggleGroupItem>
           </ToggleGroup>
           <div className={`w-full h-80 ${view === 'table' ? 'overflow-y-auto' : ''}`}>
             {view === 'chart' ? (
@@ -239,7 +260,7 @@ const CompoundInterestCalculator: NextPage = () => {
   const infoSection = {
     calculatorDescription: (
       <p>
-        복리는 원금뿐만 아니라 발생한 이자에도 이자가 붙는 방식입니다. 시간이 지남에 따라 자산이 기하급수적으로 증가하는 효과, 즉 '돈이 돈을 버는' 구조를 만듭니다. '투자의 마법'이라고도 불리는 이유입니다.
+        복리는 원금뿐만 아니라 발생한 이자에도 이자가 붙는 방식입니다. 시간이 지남에 따라 자산이 기하급수적으로 증가하는 효과, 즉 &apos;돈이 돈을 버는&apos; 구조를 만듭니다. &apos;투자의 마법&apos;이라고도 불리는 이유입니다.
       </p>
     ),
     calculationFormula: (

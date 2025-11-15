@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ResponsiveContainer, Cell, PieChart, Pie, Tooltip as RechartsTooltip } from 'recharts';
+import { ResponsiveContainer, Cell, PieChart, Pie, Tooltip as RechartsTooltip, PieLabelRenderProps } from 'recharts';
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -20,20 +20,20 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import CalculatorsLayout from "@/components/calculators/Calculatorslayout";
 
 export function DtiCalculator() {
-  const [annualIncome, setAnnualIncome] = useState<number>(5000);
-  const [loanPrincipal, setLoanPrincipal] = useState<number>(10000);
+  const [annualIncome, setAnnualIncome] = useState<number>(50000000);
+  const [loanPrincipal, setLoanPrincipal] = useState<number>(200000000);
   const [loanTerm, setLoanTerm] = useState<number>(30);
   const [interestRate, setInterestRate] = useState<number>(5);
   const [otherDebtInterest, setOtherDebtInterest] = useState<number>(0);
   const [dtiResult, setDtiResult] = useState<number | null>(null);
-  const [viewMode, setViewMode] = useState<"chart" | "table">("chart");
+  const [viewMode, setViewMode] = useState<"chart" | "table">("table");
 
   const calculationResults = useMemo(() => {
-    const income = annualIncome * 10000;
-    const principal = loanPrincipal * 10000;
+    const income = annualIncome;
+    const principal = loanPrincipal;
     const term = loanTerm;
     const rate = interestRate / 100;
-    const otherInterest = otherDebtInterest * 10000;
+    const otherInterest = otherDebtInterest;
 
     if (income <= 0 || principal <= 0 || term <= 0 || rate <= 0) {
       return null;
@@ -86,14 +86,19 @@ export function DtiCalculator() {
       dti: calculatedDti,
       dtiStatus,
       dtiBadgeColor,
-      estimatedLoanAmount: estimatedAmount > 0 ? estimatedAmount / 10000 : 0,
+      estimatedLoanAmount: estimatedAmount > 0 ? estimatedAmount : 0,
       annualIncome: income,
-      totalAnnualDebtRepayment,
-      annualPrincipalAndInterest,
-      otherInterest,
+      totalAnnualDebtRepayment: Math.round(totalAnnualDebtRepayment),
+      annualPrincipalAndInterest: Math.round(annualPrincipalAndInterest),
+      otherInterest: Math.round(otherInterest),
       chartData,
     };
   }, [annualIncome, loanPrincipal, loanTerm, interestRate, otherDebtInterest]);
+
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<number>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setter(parseFloat(value.replace(/,/g, '')));
+  };
 
   const calculateDti = () => {
     if (calculationResults) {
@@ -109,84 +114,84 @@ export function DtiCalculator() {
     }
   };
 
-  const inputSection = (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="annual-income">연간 소득 (만원)</Label>
-          <Input id="annual-income" value={annualIncome} onChange={(e) => setAnnualIncome(parseFloat(e.target.value))} placeholder="예: 5000" />
+const inputSection = (
+  <div className="space-y-4">
+    <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <Label htmlFor="annual-income">연간 소득 (원)</Label>
+            <Input id="annual-income" value={annualIncome.toLocaleString()} onChange={handleInputChange(setAnnualIncome)} placeholder="예: 50,000,000" />
+          </div>
+          <div className="space-y-3">
+            <Label htmlFor="loan-principal">주택담보대출 원금 (원)</Label>
+            <Input id="loan-principal" value={loanPrincipal.toLocaleString()} onChange={handleInputChange(setLoanPrincipal)} placeholder="예: 200,000,000" />
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="loan-principal">주택담보대출 원금 (만원)</Label>
-          <Input id="loan-principal" value={loanPrincipal} onChange={(e) => setLoanPrincipal(parseFloat(e.target.value))} placeholder="예: 10000" />
+        <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <Label htmlFor="loan-term">대출 기간 (년)</Label>
+            <Input id="loan-term" value={loanTerm} onChange={(e) => setLoanTerm(Number(e.target.value))} placeholder="예: 30" type="number" />
+          </div>
+          <div className="space-y-3">
+            <Label htmlFor="interest-rate">연간 이자율 (%)</Label>
+            <Input id="interest-rate" value={interestRate} onChange={(e) => setInterestRate(Number(e.target.value))} placeholder="예: 5" type="number" step="0.1" />
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="loan-term">대출 기간 (년)</Label>
-          <Input id="loan-term" value={loanTerm} onChange={(e) => setLoanTerm(parseFloat(e.target.value))} placeholder="예: 30" />
+        <div className="space-y-3">
+          <Label htmlFor="other-debt-interest">기타부채 연간 이자 (원)</Label>
+            <Input id="other-debt-interest" value={otherDebtInterest.toLocaleString()} onChange={handleInputChange(setOtherDebtInterest)} placeholder="예: 0" />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="interest-rate">연간 이자율 (%)</Label>
-          <Input id="interest-rate" value={interestRate} onChange={(e) => setInterestRate(parseFloat(e.target.value))} placeholder="예: 5" />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="other-debt-interest">기타부채 연간 이자 (만원)</Label>
-          <Input id="other-debt-interest" value={otherDebtInterest} onChange={(e) => setOtherDebtInterest(parseFloat(e.target.value))} placeholder="예: 0" />
-      </div>
-      <Button onClick={calculateDti} className="w-full">계산하기</Button>
-    </div>
-  );
+    <Button onClick={calculateDti} className="w-full">계산하기</Button>
+  </div>
+);
 
   const resultSection = (
     <div className="space-y-4">
       {dtiResult && calculationResults ? (
         <>
-          <div className="flex justify-between items-center">
-            <span className="text-lg">DTI 결과:</span>
-            <Badge className={`${calculationResults.dtiBadgeColor} text-lg`}>{Math.round(calculationResults.dti)}% ({calculationResults.dtiStatus})</Badge>
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-base">DTI 결과:</span>
+            <Badge className={`${calculationResults.dtiBadgeColor} text-base`}>{Math.round(calculationResults.dti)}% ({calculationResults.dtiStatus})</Badge>
           </div>
-          <Separator />
-          <div className="space-y-2">
+          <Separator className="mb-4" />
+          <div className="space-y-3 mb-4">
             <div className="flex justify-between">
               <span>총부채 연간 원리금 상환액:</span>
-              <span>{(calculationResults.totalAnnualDebtRepayment / 10000).toLocaleString()} 만원</span>
+              <span>{calculationResults.totalAnnualDebtRepayment.toLocaleString()} 원</span>
             </div>
             <div className="flex justify-between">
               <span>연간 소득:</span>
-              <span>{(calculationResults.annualIncome / 10000).toLocaleString()} 만원</span>
+              <span>{calculationResults.annualIncome.toLocaleString()} 원</span>
             </div>
             <div className="flex justify-between">
               <span>주택담보대출 연간 원리금:</span>
-              <span>{(calculationResults.annualPrincipalAndInterest / 10000).toLocaleString()} 만원</span>
+              <span>{calculationResults.annualPrincipalAndInterest.toLocaleString()} 원</span>
             </div>
             <div className="flex justify-between">
               <span>기타부채 연간 이자:</span>
-              <span>{(calculationResults.otherInterest / 10000).toLocaleString()} 만원</span>
+              <span>{calculationResults.otherInterest.toLocaleString()} 원</span>
             </div>
           </div>
-          <Separator />
-          <div className="text-center">
-            <p className="text-lg font-semibold">DTI 40% 기준, 최대 대출 가능 금액</p>
+          <Separator className="mb-4" />
+          <div className="text-center mb-4">
+            <p className="text-base font-semibold">DTI 40% 기준, 최대 대출 가능 금액</p>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <p className="text-2xl font-bold text-blue-600">{Math.round(calculationResults.estimatedLoanAmount).toLocaleString()} 만원</p>
+                  <p className="text-xl font-bold text-blue-600">{Math.round(calculationResults.estimatedLoanAmount).toLocaleString()} 원</p>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{calculationResults.estimatedLoanAmount.toLocaleString()} 만원</p>
+                  <p>{calculationResults.estimatedLoanAmount.toLocaleString()} 원</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
-          <div>
-            <div className="flex flex-row items-center justify-between">
-              <h3 className="text-lg font-semibold">소득 대비 부채 구성</h3>
+          <div className="mb-4">
+            <div className="flex flex-row items-center justify-between mb-4">
+              <h3 className="text-base font-semibold">소득 대비 부채 구성</h3>
               {dtiResult && (
                 <ToggleGroup type="single" value={viewMode} onValueChange={(value) => { if (value) setViewMode(value as "chart" | "table"); }} defaultValue="chart">
-                  <ToggleGroupItem value="chart">차트</ToggleGroupItem>
                   <ToggleGroupItem value="table">테이블</ToggleGroupItem>
+                  <ToggleGroupItem value="chart">차트</ToggleGroupItem>
                 </ToggleGroup>
               )}
             </div>
@@ -202,7 +207,7 @@ export function DtiCalculator() {
                             return (
                               <div className="bg-background p-2 border rounded shadow-lg text-sm">
                                 <p className="font-bold">{data.name}</p>
-                                <p>{(data.value / 10000).toLocaleString()} 만원</p>
+                                <p>{data.value.toLocaleString()} 원</p>
                                 <p>{((data.value / calculationResults.annualIncome) * 100).toFixed(2)}%</p>
                               </div>
                             );
@@ -218,7 +223,7 @@ export function DtiCalculator() {
                         outerRadius={80}
                         dataKey="value"
                         nameKey="name"
-                        label={({ name, percent }: PieLabelRenderProps) => `${name}: ${(percent * 100).toFixed(1)}%`}
+                        label={({ name, percent }: PieLabelRenderProps) => `${name}: ${((percent as number) * 100).toFixed(1)}%`}
                         labelLine={false}
                       >
                         {calculationResults.chartData.map((entry, index) => (
@@ -234,7 +239,7 @@ export function DtiCalculator() {
                     <TableHeader>
                       <TableRow>
                         <TableHead>항목</TableHead>
-                        <TableHead>금액 (만원)</TableHead>
+                        <TableHead>금액 (원)</TableHead>
                         <TableHead>비율 (%)</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -242,7 +247,7 @@ export function DtiCalculator() {
                       {calculationResults.chartData.map((item, index) => (
                         <TableRow key={index}>
                           <TableCell>{item.name}</TableCell>
-                          <TableCell>{(item.value / 10000).toLocaleString()}</TableCell>
+                          <TableCell>{Math.round(item.value).toLocaleString()} 원</TableCell>
                           <TableCell>{((item.value / calculationResults.annualIncome) * 100).toFixed(2)}</TableCell>
                         </TableRow>
                       ))}

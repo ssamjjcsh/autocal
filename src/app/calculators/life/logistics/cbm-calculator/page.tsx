@@ -233,17 +233,17 @@ const CBMCalculator: NextPage = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">필요한 컨테이너 (1단 적재):</span>
                       <div className="flex space-x-4">
-                        <span className="font-mono">20'ft {displayedResult.requiredContainers['20ft'].singleStack} 개</span>
-                        <span className="font-mono">40'ft {displayedResult.requiredContainers['40ft'].singleStack} 개</span>
-                        <span className="font-mono">40'HC {displayedResult.requiredContainers['40HC'].singleStack} 개</span>
+                        <span className="font-mono">20&apos;ft {displayedResult.requiredContainers['20ft'].singleStack} 개</span>
+                        <span className="font-mono">40&apos;ft {displayedResult.requiredContainers['40ft'].singleStack} 개</span>
+                        <span className="font-mono">40&apos;HC {displayedResult.requiredContainers['40HC'].singleStack} 개</span>
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">필요한 컨테이너 (2단 적재):</span>
                       <div className="flex space-x-4">
-                        <span className="font-mono">20'ft {displayedResult.requiredContainers['20ft'].doubleStack} 개</span>
-                        <span className="font-mono">40'ft {displayedResult.requiredContainers['40ft'].doubleStack} 개</span>
-                        <span className="font-mono">40'HC {displayedResult.requiredContainers['40HC'].doubleStack} 개</span>
+                        <span className="font-mono">20&apos;ft {displayedResult.requiredContainers['20ft'].doubleStack} 개</span>
+                        <span className="font-mono">40&apos;ft {displayedResult.requiredContainers['40ft'].doubleStack} 개</span>
+                        <span className="font-mono">40&apos;HC {displayedResult.requiredContainers['40HC'].doubleStack} 개</span>
                       </div>
                     </div>
                   </>
@@ -299,17 +299,17 @@ const CBMCalculator: NextPage = () => {
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">필요한 컨테이너 (1단 적재):</span>
                       <div className="flex space-x-4">
-                        <span className="font-mono">20'ft {displayedResult.requiredContainers['20ft'].singleStack} 개</span>
-                        <span className="font-mono">40'ft {displayedResult.requiredContainers['40ft'].singleStack} 개</span>
-                        <span className="font-mono">40'HC {displayedResult.requiredContainers['40HC'].singleStack} 개</span>
+                        <span className="font-mono">20&apos;ft {displayedResult.requiredContainers['20ft'].singleStack} 개</span>
+                        <span className="font-mono">40&apos;ft {displayedResult.requiredContainers['40ft'].singleStack} 개</span>
+                        <span className="font-mono">40&apos;HC {displayedResult.requiredContainers['40HC'].singleStack} 개</span>
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">필요한 컨테이너 (2단 적재):</span>
                       <div className="flex space-x-4">
-                        <span className="font-mono">20'ft {displayedResult.requiredContainers['20ft'].doubleStack} 개</span>
-                        <span className="font-mono">40'ft {displayedResult.requiredContainers['40ft'].doubleStack} 개</span>
-                        <span className="font-mono">40'HC {displayedResult.requiredContainers['40HC'].doubleStack} 개</span>
+                        <span className="font-mono">20&apos;ft {displayedResult.requiredContainers['20ft'].doubleStack} 개</span>
+                        <span className="font-mono">40&apos;ft {displayedResult.requiredContainers['40ft'].doubleStack} 개</span>
+                        <span className="font-mono">40&apos;HC {displayedResult.requiredContainers['40HC'].doubleStack} 개</span>
                       </div>
                     </div>
                   </>
@@ -324,6 +324,35 @@ const CBMCalculator: NextPage = () => {
         </div>
       )}
     </>
+  );
+
+  const containerSpecifications = (
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">타입</th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">길이 (m)</th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">너비 (m)</th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">높이 (m)</th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">내부 부피 (m³)</th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">최대 중량 (kg)</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {Object.entries(CONTAINER_SPECS).map(([type, spec]) => (
+            <tr key={type}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{type}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorLength}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorWidth}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.interiorHeight}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.maxVolumeM3}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{spec.maxWeightKg}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 
   const infoSection = {
@@ -368,122 +397,7 @@ const CBMCalculator: NextPage = () => {
         </ul>
       </>
     ),
-    containerSpecifications: (
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3">컨테이너 규격 표</h3>
-        <div className="overflow-x-auto">
-          <div className="dry-container-table">
-            <ul className="first">
-              <li>Size & Type</li>
-              <li>Height</li>
-              <li>Tare (kgs)</li>
-              <li>Payload (kgs)</li>
-              <li>Max.Gross (kgs)</li>
-              <li>
-                Door Opening
-                <p>
-                  <span>세로(Width)</span>
-                  <span>높이(Height)</span>
-                </p>
-              </li>
-              <li>
-                Interior Dimension
-                <p>
-                  <span>가로(Length)</span>
-                  <span>세로(Width)</span>
-                  <span>높이(Height)</span>
-                </p>
-              </li>
-              <li>Interior Cubic</li>
-            </ul>
-            {Object.entries(CONTAINER_SPECS).map(([type, spec]) => (
-              <ul key={type}>
-                <li>{type}</li>
-                <li>{spec.height}</li>
-                <li>{spec.tare.toLocaleString()}</li>
-                <li>{spec.payload.toLocaleString()}</li>
-                <li>{spec.maxGross.toLocaleString()}</li>
-                <li>{spec.doorOpeningWidth}</li>
-                <li>{spec.doorOpeningHeight}</li>
-                <li>{spec.interiorLength}</li>
-                <li>{spec.interiorWidth}</li>
-                <li>{spec.interiorHeight}</li>
-                <li>{spec.interiorCubic}</li>
-              </ul>
-            ))}
-          </div>
-        </div>
-      </div>
-    ),
-    containerSpecifications: (
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3">컨테이너 규격 표</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-muted">
-                <th className="p-2 text-center" rowSpan={2}>Size & Type</th>
-                <th className="p-2 text-center" rowSpan={2}>Height</th>
-                <th className="p-2 text-center" rowSpan={2}>Tare(kg)</th>
-                <th className="p-2 text-center" rowSpan={2}>Payload(kg)</th>
-                <th className="p-2 text-center" rowSpan={2}>Max Gross(kg)</th>
-                <th className="p-2 text-center" colSpan={2}>Door Opening</th>
-                <th className="p-2 text-center" colSpan={3}>Interior Dimension</th>
-                <th className="p-2 text-center" rowSpan={2}>Interior Cubic</th>
-              </tr>
-              <tr className="bg-muted">
-                <th className="p-2 text-center">Width</th>
-                <th className="p-2 text-center">Height</th>
-                <th className="p-2 text-center">Length</th>
-                <th className="p-2 text-center">Width</th>
-                <th className="p-2 text-center">Height</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="p-2">20ft</td>
-                <td className="p-2">8'6"</td>
-                <td className="p-2">2,200</td>
-                <td className="p-2">28,280</td>
-                <td className="p-2">30,480</td>
-                <td className="p-2">2,340mm</td>
-                <td className="p-2">2,280mm</td>
-                <td className="p-2">5,898mm</td>
-                <td className="p-2">2,352mm</td>
-                <td className="p-2">2,392mm</td>
-                <td className="p-2">33.2㎥</td>
-              </tr>
-              <tr className="border-b">
-                <td className="p-2">40ft</td>
-                <td className="p-2">8'6"</td>
-                <td className="p-2">3,600</td>
-                <td className="p-2">28,900</td>
-                <td className="p-2">32,500</td>
-                <td className="p-2">2,340mm</td>
-                <td className="p-2">2,280mm</td>
-                <td className="p-2">12,032mm</td>
-                <td className="p-2">2,352mm</td>
-                <td className="p-2">2,392mm</td>
-                <td className="p-2">67.6㎥</td>
-              </tr>
-              <tr>
-                <td className="p-2">40HC</td>
-                <td className="p-2">9'6"</td>
-                <td className="p-2">3,800</td>
-                <td className="p-2">28,700</td>
-                <td className="p-2">32,500</td>
-                <td className="p-2">2,340mm</td>
-                <td className="p-2">2,585mm</td>
-                <td className="p-2">12,032mm</td>
-                <td className="p-2">2,352mm</td>
-                <td className="p-2">2,698mm</td>
-                <td className="p-2">76.3㎥</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    ),
+    containerSpecifications: containerSpecifications,
     usefulTips: (
       <>
         <p className="mb-2">💡 유용한 팁:</p>

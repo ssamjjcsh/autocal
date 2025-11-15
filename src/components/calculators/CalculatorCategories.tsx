@@ -27,39 +27,40 @@ export default function CalculatorCategories() {
             (subcategory) => subcategory.calculators
           );
           const calculatorsToShow = allCalculators.slice(0, 5);
+          const placeholdersNeeded = 5 - calculatorsToShow.length;
+          const placeholderCalculators = Array.from({ length: placeholdersNeeded }, (_, i) => ({
+            id: `placeholder-${category.id}-${i}`,
+            name: '준비중',
+            href: '#', // 클릭해도 아무 동작 안하도록
+            isPlaceholder: true,
+          }));
 
-          const exampleCalculators = [
-            { id: 'example-1', name: '예시 계산기 1', href: '#' },
-            { id: 'example-2', name: '예시 계산기 2', href: '#' },
-            { id: 'example-3', name: '예시 계산기 3', href: '#' },
-          ];
-
-          const itemsToDisplay = allCalculators.length > 0 ? calculatorsToShow : exampleCalculators;
+          const itemsToDisplay = [...calculatorsToShow, ...placeholderCalculators];
 
           return (
             <div key={category.id}>
               <Link href={category.href} className="group mb-3 inline-block">
-                <h3 className={`text-lg font-bold ${style.color} group-hover:underline`}>
+                <h3 className={`text-base font-bold ${style.color} group-hover:underline`}>
                   {category.name} ›
                 </h3>
               </Link>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 {itemsToDisplay.map((calculator) => (
                   <Link
                     href={calculator.href}
                     key={calculator.id}
-                    className={`flex items-center gap-3 p-3 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900`}
+                    className={`flex items-center gap-2 p-2 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900`}
                   >
-                    <category.icon className={`w-5 h-5 ${style.color}`} />
-                    <span className="font-medium text-gray-800 dark:text-gray-200">{calculator.name}</span>
+                    <category.icon className={`w-4 h-4 ${style.color}`} />
+                    <span className="text-sm text-sm font-normal text-gray-800 dark:text-gray-200">{calculator.name}</span>
                   </Link>
                 ))}
                 <Link
                   href={category.href}
-                  className={`flex items-center gap-3 p-3 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900`}
+                  className={`flex items-center gap-2 p-2 border rounded-md transition-colors bg-white dark:bg-gray-950 ${style.border} hover:bg-gray-50 dark:hover:bg-gray-900`}
                 >
-                  <MoreHorizontal className={`w-5 h-5 ${style.color}`} />
-                  <span className="font-medium text-gray-800 dark:text-gray-200">더 많은 토픽</span>
+                  <MoreHorizontal className={`w-4 h-4 ${style.color}`} />
+                  <span className="font-normal text-gray-800 dark:text-gray-200">더 많은 토픽</span>
                 </Link>
               </div>
             </div>
