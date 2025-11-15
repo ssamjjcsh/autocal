@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Header from '@/components/layout/Header';
+import LeftAdRail from '@/components/ads/LeftAdRail';
 import RightAdRail from '@/components/ads/RightAdRail';
 
 interface LayoutProps {
@@ -12,8 +13,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Header />
+
       <div className="flex">
-        <main className="flex-1 px-3 py-3 sm:px-5 lg:px-7 overflow-y-auto overflow-x-hidden max-w-7xl mx-auto">
+        <LeftAdRail />
+        <main className="flex-1 px-3 py-3 sm:px-5 lg:px-7 overflow-y-auto overflow-x-hidden max-w-7xl mx-auto xl:ml-64 xl:mr-64">
           {children}
         </main>
         <RightAdRail />

@@ -3,17 +3,17 @@
 import React from 'react';
 import AdSlot from './AdSlot';
 
-const RightAdRail: React.FC = () => {
+const LeftAdRail: React.FC = () => {
   const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
-  const slotTop = process.env.NEXT_PUBLIC_ADSENSE_SLOT_RIGHT_TOP;
-  const slotMiddle = process.env.NEXT_PUBLIC_ADSENSE_SLOT_RIGHT_MIDDLE;
-  const slotBottom = process.env.NEXT_PUBLIC_ADSENSE_SLOT_RIGHT_BOTTOM;
+  const slotTop = process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT_TOP;
+  const slotMiddle = process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT_MIDDLE;
+  const slotBottom = process.env.NEXT_PUBLIC_ADSENSE_SLOT_LEFT_BOTTOM;
 
   // 클라이언트 ID가 없으면 광고 레일 자체를 렌더링하지 않음
   if (!client) return null;
 
   return (
-    <aside className="hidden xl:flex xl:flex-col xl:fixed xl:inset-y-0 xl:right-0 xl:z-40 w-64 bg-white border-l border-gray-200 p-3 overflow-y-auto">
+    <aside className="hidden xl:flex xl:flex-col xl:fixed xl:inset-y-0 xl:left-0 xl:z-40 w-64 bg-white border-r border-gray-200 p-3 overflow-y-auto">
       <div className="space-y-4">
         {/* 상단 큰 배너 (300x600 권장) */}
         {slotTop && (
@@ -40,4 +40,4 @@ const RightAdRail: React.FC = () => {
   );
 };
 
-export default RightAdRail;
+export default LeftAdRail;

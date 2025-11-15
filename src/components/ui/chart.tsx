@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils"
 
 // Format: HH:MM:SS
 const formatTime = (value: number) => {

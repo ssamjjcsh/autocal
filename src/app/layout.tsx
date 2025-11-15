@@ -28,6 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+          <Script
+            id="adsense-script"
+            strategy="beforeInteractive"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        )}
+      </head>
       <body
         className={`antialiased`}
         suppressHydrationWarning={true}
@@ -38,15 +49,6 @@ export default function RootLayout({
           </Layout>
           <Toaster />
         </Providers>
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
-          <Script
-            id="adsense-script"
-            strategy="afterInteractive"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-          />
-        )}
       </body>
     </html>
   );

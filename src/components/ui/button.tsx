@@ -8,7 +8,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils"
 
 // 버튼 스타일 변형 정의 (CVA 사용)
 const buttonVariants = cva(
