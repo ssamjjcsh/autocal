@@ -76,6 +76,52 @@ const MATERIAL_DENSITIES = {
   fiberglass: 1800   // FRP
 };
 
+// ==================== 컨테이너 정보 ====================
+export const CONTAINER_SPECS = {
+  '20ft': {
+    height: "8'6\"",
+    tare: 2200,
+    payload: 28280,
+    maxGross: 30480,
+    maxWeightKg: 28280, // payload
+    doorOpeningWidth: "2,340mm",
+    doorOpeningHeight: "2,280mm",
+    interiorLength: "5,898mm",
+    interiorWidth: "2,352mm",
+    interiorHeight: "2,392mm",
+    maxVolumeM3: 33.2,
+    internalHeightM: 2.392,
+  },
+  '40ft': {
+    height: "8'6\"",
+    tare: 3600,
+    payload: 28900,
+    maxGross: 32500,
+    maxWeightKg: 28900, // payload
+    doorOpeningWidth: "2,340mm",
+    doorOpeningHeight: "2,280mm",
+    interiorLength: "12,032mm",
+    interiorWidth: "2,352mm",
+    interiorHeight: "2,392mm",
+    maxVolumeM3: 67.6,
+    internalHeightM: 2.392,
+  },
+  '40HC': {
+    height: "9'6\"",
+    tare: 3800,
+    payload: 28700,
+    maxGross: 32500,
+    maxWeightKg: 28700, // payload
+    doorOpeningWidth: "2,340mm",
+    doorOpeningHeight: "2,585mm",
+    interiorLength: "12,032mm",
+    interiorWidth: "2,352mm",
+    interiorHeight: "2,698mm",
+    maxVolumeM3: 76.3,
+    internalHeightM: 2.698,
+  },
+};
+
 // ==================== Tank 부피/무게 계산 ====================
 export function calculateTankVolume(input: TankCalculationInput): CalculationResult {
   const { 
@@ -221,6 +267,68 @@ export function calculateAffinity(input: AffinityCalculationInput): CalculationR
       original_power: `${p1} kW`
     }
   };
+}
+
+export interface ContainerCalculationInput {
+  totalVolumeM3: number;
+  totalWeightKg: number;
+  singleBoxVolumeM3: number;
+  singleBoxHeightM: number;
+}
+
+export interface ContainerCalculationResult {
+  '20ft': {
+    singleStack: number;
+    doubleStack: number;
+  };
+  '40ft': {
+    singleStack: number;
+    doubleStack: number;
+  };
+  '40HC': {
+    singleStack: number;
+    doubleStack: number;
+  };
+}
+
+export function calculateRequiredContainers(input: ContainerCalculationInput): ContainerCalculationResult {
+  const { totalVolumeM3, totalWeightKg, singleBoxVolumeM3, singleBoxHeightM } = input;
+
+  const results: ContainerCalculationResult = {
+    '20ft': { singleStack: 0, doubleStack: 0 },
+    '40ft': { singleStack: 0, doubleStack: 0 },
+    '40HC': { singleStack: 0, doubleStack: 0 }
+  };
+
+  const USAGE_RATE = 0.85; // 실제 적재율 (85%)
+
+  for (const containerType in CONTAINER_SPECS) {
+    const spec = CONTAINER_SPECS[containerType as keyof typeof CONTAINER_SPECS];
+
+    // 부피 기준 필요한 컨테이너 수
+    const containersByVolume = totalVolumeM3 / (spec.maxVolumeM3 * USAGE_RATE);
+    // 중량 기준 필요한 컨테이너 수
+    const containersByWeight = totalWeightKg / spec.maxWeightKg;
+
+    // 더 큰 값으로 필요한 컨테이너 수 결정 (올림)
+    const requiredContainers = Math.ceil(Math.max(containersByVolume, containersByWeight));
+
+    results[containerType as keyof typeof CONTAINER_SPECS].singleStack = requiredContainers;
+
+    // 2단 적재 가능 여부 확인 (박스 높이가 컨테이너 내부 높이의 절반 이하)
+    if (singleBoxHeightM > 0 && singleBoxHeightM * 2 <= spec.internalHeightM) {
+      // 2단 적재 시 필요한 컨테이너 수 (부피 기준)
+      const doubleStackContainersByVolume = totalVolumeM3 / (spec.maxVolumeM3 * USAGE_RATE * 2); // 2단 적재이므로 부피 2배 활용
+      // 2단 적재 시 필요한 컨테이너 수 (중량 기준)
+      const doubleStackContainersByWeight = totalWeightKg / spec.maxWeightKg;
+
+      results[containerType as keyof typeof CONTAINER_SPECS].doubleStack = Math.ceil(Math.max(doubleStackContainersByVolume, doubleStackContainersByWeight));
+    } else {
+      results[containerType as keyof typeof CONTAINER_SPECS].doubleStack = 0; // 2단 적재 불가능 시 0
+    }
+  }
+
+  return results;
 }
 
 // ==================== 기타 유틸리티 함수 ====================

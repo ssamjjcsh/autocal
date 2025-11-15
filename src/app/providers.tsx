@@ -22,6 +22,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
+import { MantineProvider } from '@mantine/core';
+
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 // 전역 프로바이더 컴포넌트
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -44,12 +47,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      {/* React Query 개발 도구 - 쿼리 상태 시각화 */}
-      <ReactQueryDevtools 
-        initialIsOpen={false}  // 기본적으로 닫힌 상태로 시작
-      /> 
-    </QueryClientProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <MantineProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+          {/* React Query 개발 도구 - 쿼리 상태 시각화 */}
+          <ReactQueryDevtools 
+            initialIsOpen={false}  // 기본적으로 닫힌 상태로 시작
+          /> 
+        </QueryClientProvider>
+      </MantineProvider>
+    </ThemeProvider>
   );
 }

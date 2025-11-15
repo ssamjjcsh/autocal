@@ -1,129 +1,187 @@
-'use client';
-
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
-  Bars3Icon,
-  BellIcon,
   MagnifyingGlassIcon,
+  BellIcon,
   UserIcon,
-  Cog6ToothIcon,
-  ArrowRightOnRectangleIcon
 } from '@heroicons/react/24/outline';
+import { calculatorCategories } from '@/data/calculators';
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
-interface HeaderProps {
-  toggleSidebar: () => void;
-  title?: string;
-}
+// Flatten calculators for search
+const allCalculators = calculatorCategories.flatMap(category =>
+  category.subcategories.flatMap(subcategory =>
+    subcategory.calculators.map(calculator => ({
+      ...calculator,
+      categoryName: category.name,
+      subcategoryName: subcategory.name,
+    }))
+  )
+);
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, title = '대시보드' }) => {
+const orderedCategoryNames = [
+  'finance',
+  'life',
+  'conversion',
+  'science',
+  'engineering',
+  'material',
+  'game',
+  'others',
+];
+
+const navigation = orderedCategoryNames.map(name => {
+    const category = calculatorCategories.find(c => c.id === name);
+    return category ? { name: category.name, href: category.href, icon: category.icon } : null;
+  }).filter(Boolean as any);
+
+const Header: React.FC = () => {
+  const pathname = usePathname();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<typeof allCalculators>([]);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (searchQuery) {
+        const results = allCalculators.filter(calc =>
+          calc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          calc.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          calc.subcategoryName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchResults(results);
+      } else {
+        setSearchResults([]);
+      }
+    }, 300); // Debounce time
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchRef]);
+
+  const handleResultClick = () => {
+    setSearchQuery('');
+    setIsSearchFocused(false);
+  };
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-      <div className="flex items-center justify-between px-4 py-3 lg:px-6">
-        {/* Left Section */}
-        <div className="flex items-center space-x-4">
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            aria-label="Toggle sidebar"
-            title="Toggle sidebar"
-            onClick={toggleSidebar}
-            className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
-          >
-            <Bars3Icon className="w-5 h-5 text-gray-600" />
-          </button>
-          
-          {/* Page Title */}
-          <div>
-            <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
-            <p className="text-sm text-gray-500 hidden sm:block">
-              실시간 자재 가격 모니터링 시스템
-            </p>
+    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b">
+      {/* Top row: Logo, Search, Icons */}
+      <div className="container mx-auto flex h-20 items-center justify-between px-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-3">
+          <div className="w-20 h-12 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-full flex items-center justify-center shadow-md">
+            <span className="text-white font-bold text-lg">AICalc</span>
           </div>
-        </div>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">All-in-Calc</h1>
+        </Link>
 
-        {/* Center Section - Search (hidden on mobile) */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <div className="relative w-full">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
+        <div className="flex flex-1 items-center justify-end space-x-4">
+          {/* Search */}
+          <div className="relative w-full max-w-lg" ref={searchRef}>
+            <label htmlFor="search" className="sr-only">
+              Search
+            </label>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <MagnifyingGlassIcon
+                  className="h-5 w-5 text-muted-foreground"
+                  aria-hidden="true"
+                />
+              </div>
+              <input
+                id="search"
+                name="search"
+                className="block w-full rounded-md border-0 bg-muted py-2.5 pl-10 pr-3 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                placeholder="Search for any calculator..."
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+              />
             </div>
-            <input
-              type="text"
-              placeholder="자재명 검색..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-        </div>
-
-        {/* Right Section */}
-        <div className="flex items-center space-x-3">
-          {/* Search button for mobile */}
-          <button
-            type="button"
-            aria-label="검색"
-            title="검색"
-            className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
-          >
-            <MagnifyingGlassIcon className="w-5 h-5 text-gray-600" />
-          </button>
-          
-          {/* Notifications */}
-          <div className="relative">
-            <button className="p-2 rounded-md hover:bg-gray-100 transition-colors relative">
-              <BellIcon className="w-5 h-5 text-gray-600" />
-              {/* Notification badge */}
-              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                3
-              </span>
-            </button>
+            {isSearchFocused && (
+              <div className="absolute mt-1 w-full max-h-96 overflow-y-auto rounded-md bg-background border shadow-lg z-50">
+                {searchResults.length > 0 ? (
+                  <ul className="py-1">
+                    {searchResults.map((calc) => (
+                      <li key={calc.id}>
+                        <Link
+                          href={calc.href}
+                          className="block px-4 py-2 text-sm hover:bg-muted"
+                          onClick={handleResultClick}
+                        >
+                          <p className="font-semibold text-foreground">{calc.name}</p>
+                          <p className="text-xs text-muted-foreground">{calc.categoryName} &gt; {calc.subcategoryName}</p>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  searchQuery && <p className="p-4 text-sm text-muted-foreground">No results found.</p>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* User Menu */}
-          <div className="relative group">
-            <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors group">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <UserIcon className="w-4 h-4 text-white" />
-              </div>
-              <div className="hidden sm:block text-left">
-                <p className="text-sm font-medium text-gray-900">Engineer</p>
-                <p className="text-xs text-gray-500">관리자</p>
-              </div>
+          {/* Right Icons */}
+          <div className="flex items-center space-x-2">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="p-2 rounded-full text-muted-foreground hover:text-foreground focus:outline-none"
+            >
+              <span className="sr-only">View notifications</span>
+              <BellIcon className="h-6 w-6" aria-hidden="true" />
             </button>
-            
-            {/* Dropdown Menu */}
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div className="py-1">
-                <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <UserIcon className="w-4 h-4 mr-3 text-gray-500" />
-                  프로필
-                </a>
-                <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <Cog6ToothIcon className="w-4 h-4 mr-3 text-gray-500" />
-                  설정
-                </a>
-                <hr className="my-1 border-gray-200" />
-                <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <ArrowRightOnRectangleIcon className="w-4 h-4 mr-3 text-gray-500" />
-                  로그아웃
-                </a>
-              </div>
-            </div>
+            <button
+              type="button"
+              className="flex items-center rounded-full text-sm focus:outline-none"
+              id="user-menu-button"
+            >
+              <span className="sr-only">Open user menu</span>
+              <UserIcon className="h-8 w-8 rounded-full text-muted-foreground" />
+            </button>
           </div>
         </div>
       </div>
-      
-      {/* Mobile Search Bar */}
-      <div className="md:hidden px-4 pb-3">
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-          </div>
-          <input
-            type="text"
-            placeholder="자재명 검색..."
-            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+
+      {/* Bottom row: Navigation */}
+      <div className="border-t">
+        <nav className="container mx-auto flex items-center justify-center space-x-8 py-3">
+          {navigation.map((item) => {
+            if (!item) return null;
+            const isActive = pathname?.startsWith(item.href);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`text-base font-medium transition-colors px-3 py-1 rounded-md ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

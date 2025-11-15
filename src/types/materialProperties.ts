@@ -15,6 +15,8 @@
 
 // 기본 물성 정보 인터페이스 (모든 단위는 영국 단위계)
 export interface MaterialProperties {
+  [key: string]: any;               // 문자열 인덱스 시그니처
+  
   // 밀도 (Density)
   den?: number;                    // lb/in³
   
@@ -67,6 +69,21 @@ export interface MaterialDatabase {
   [category: string]: MaterialSelection[] | undefined;
 }
 
+export interface MaterialsByCategory {
+  [category: string]: MaterialSelection[];
+}
+
+export interface PropertyKoreanNames {
+  [propertyKey: string]: {
+    korean: string;
+    description?: string;
+  };
+}
+
+export interface ElementKoreanNames {
+  [elementSymbol: string]: string;
+}
+
 // 재료 선택을 위한 인터페이스
 export interface MaterialSelection {
   id: string;                      // 고유 식별자
@@ -76,6 +93,8 @@ export interface MaterialSelection {
   condition: string;               // 조건 (hot, cold, annealed 등)
   displayName: string;             // 표시용 이름
   properties: MaterialProperties;  // 실제 물성 데이터
+  composition?: any;              // 화학 조성 데이터
+  basePrice?: any;               // 기본 가격 정보
 }
 
 // 물성 비교를 위한 인터페이스

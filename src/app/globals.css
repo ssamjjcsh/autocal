@@ -186,6 +186,40 @@ td {
   padding: 8px 12px;
 }
 
+/* Dry Container Table Styles - ul/div 기반 테이블 */
+.dry-container-table {
+  display: grid;
+  gap: 0;
+}
+
+.dry-container-table ul {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dry-container-table .first {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.dry-container-table li {
+  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.dry-container-table li p {
+  margin: 4px 0 0 0;
+  font-size: 0.875em;
+}
+
+.dry-container-table li span {
+  margin-right: 8px;
+}
+
 /* Dark mode table styles */
 .dark table, .dark th, .dark td {
   border-color: #374151;
@@ -197,6 +231,113 @@ td {
 
 .dark td {
   background-color: #1f2937;
+}
+
+/* Dark mode dry container table styles */
+.dark .dry-container-table .first {
+  background-color: #111827;
+}
+
+.dark .dry-container-table li {
+  border-color: #374151;
+  background-color: #1f2937;
+}
+
+/* Accordion Typography Optimization */
+.accordion-content-optimized {
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+
+/* 모든 텍스트 요소에 일관된 글자 크기 적용 */
+.accordion-content-optimized p,
+.accordion-content-optimized ul,
+.accordion-content-optimized ol,
+.accordion-content-optimized li,
+.accordion-content-optimized span,
+.accordion-content-optimized div {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.accordion-content-optimized p {
+  margin-bottom: 1rem;
+}
+
+.accordion-content-optimized ul,
+.accordion-content-optimized ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.accordion-content-optimized li {
+  margin-bottom: 0.5rem;
+}
+
+.accordion-content-optimized code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  background-color: hsl(var(--muted));
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.accordion-content-optimized h1,
+.accordion-content-optimized h2,
+.accordion-content-optimized h3,
+.accordion-content-optimized h4,
+.accordion-content-optimized h5,
+.accordion-content-optimized h6 {
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.accordion-content-optimized h1 { font-size: 1.5em; }
+.accordion-content-optimized h2 { font-size: 1.375em; }
+.accordion-content-optimized h3 { font-size: 1.25em; }
+.accordion-content-optimized h4 { font-size: 1.125em; }
+.accordion-content-optimized h5 { font-size: 1em; }
+.accordion-content-optimized h6 { font-size: 0.875em; }
+
+/* 작은 텍스트도 일관된 크기로 조정 */
+.accordion-content-optimized .text-xs,
+.accordion-content-optimized .text-sm {
+  font-size: 14px !important;
+  line-height: 1.5;
+}
+
+/* 코드 블록 내부 텍스트도 일관성 유지 */
+.accordion-content-optimized .font-mono {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .accordion-content-optimized {
+    font-size: 15px;
+  }
+  
+  .accordion-content-optimized p,
+  .accordion-content-optimized ul,
+  .accordion-content-optimized ol,
+  .accordion-content-optimized li,
+  .accordion-content-optimized span,
+.accordion-content-optimized div {
+    font-size: 15px;
+  }
+  
+  .accordion-content-optimized .text-xs,
+  .accordion-content-optimized .text-sm {
+    font-size: 13px !important;
+  }
+  
+  .accordion-content-optimized .font-mono {
+    font-size: 14px;
+  }
 }
 
 /* Tiptap Editor Styles */
