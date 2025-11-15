@@ -3,7 +3,7 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
 import { ko } from 'date-fns/locale'
-import { cn } from '../../lib/utils';
+import { cn } from '../../utils/cn';
 import { CalendarIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
