@@ -80,10 +80,10 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
               <Card key={subcategory.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
                 <CardHeader className="bg-gray-50 dark:bg-gray-700/50 p-3">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full">
-                      {React.createElement(Icon, { className: "w-6 h-6 text-blue-600 dark:text-blue-400" })}
+                    <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full">
+                      {React.createElement(Icon, { className: "w-5 h-5 text-blue-600 dark:text-blue-400" })}}
                     </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">{subcategory.name}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">{subcategory.name}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="p-3">
