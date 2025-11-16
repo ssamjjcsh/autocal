@@ -78,7 +78,7 @@ const NewUnitConverter = ({ category }: { category: string }) => {
               type="number" 
               value={convertedValues[unit]?.toFixed(2) || ''} 
               readOnly 
-              className="text-right bg-gray-100"
+              className="text-right bg-white"
             />
           </div>
         ))}
