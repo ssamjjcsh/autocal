@@ -85,7 +85,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
           <CardHeader className="border-b">
             <CardTitle>정보 입력</CardTitle>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="p-3 space-y-4">
             {inputSection}
           </CardContent>
         </Card>
@@ -93,7 +93,7 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
           <CardHeader className="border-b">
             <CardTitle>계산 결과</CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent className="p-3 space-y-4">
             {resultSection}
           </CardContent>
         </Card>
@@ -108,9 +108,9 @@ const CalculatorsLayout: React.FC<CalculatorsLayoutProps> = ({
           <AccordionItem 
             value={item.value} 
             key={item.value}
-            className="border rounded-lg bg-card transition-colors hover:bg-accent/50"
+            className="border rounded-lg bg-card"
           >
-            <AccordionTrigger className="text-lg font-semibold hover:no-underline p-4 data-[state=open]:bg-accent/20 rounded-lg transition-colors">
+            <AccordionTrigger className="text-lg font-semibold hover:no-underline p-4 data-[state=open]:bg-accent/20 rounded-lg">
               <div className="flex items-center gap-3">
                 {item.icon}
                 <span className="text-left">{item.title}</span>

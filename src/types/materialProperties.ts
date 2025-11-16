@@ -97,7 +97,7 @@ export interface MaterialSelection {
   basePrice?: any;               // 기본 가격 정보
 }
 
-// 물성 비교를 위한 인터페이스
+// 재질 물성 비교를 위한 인터페이스
 export interface MaterialComparison {
   materials: MaterialSelection[];  // 비교할 재료 목록
   properties: string[];           // 비교할 물성 항목

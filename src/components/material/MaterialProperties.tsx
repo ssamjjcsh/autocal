@@ -187,7 +187,7 @@ export default function MaterialProperties({
           <CardHeader>
             <CardTitle className="flex items-center">
               <Table className="w-5 h-5 mr-2" />
-              Material Properties
+              재질 물성 비교
             </CardTitle>
             <CardDescription>
               선택된 재질들의 주요 물성 비교

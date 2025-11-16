@@ -13,7 +13,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-8 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      "inline-flex items-center justify-center rounded-t-md",
       className
     )}
     {...props}
@@ -28,10 +28,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-      "border border-gray-200 hover:bg-gray-100", // Add a light border to all triggers and hover effect
-      "bg-white", // Explicitly set background for inactive tabs
-      "data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:border-b-background", // Active state: primary background, primary-foreground text, and hide bottom border
+      "inline-flex items-center justify-center whitespace-nowrap px-4 py-2 text-sm font-medium bg-white border border-gray-200 rounded-t-md hover:bg-gray-50 data-[state=active]:bg-white data-[state=active]:border-b-white data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:z-10",
       className
     )}
     {...props}
@@ -46,7 +43,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "border border-gray-200 rounded-b-md border-t-0 p-1 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
       className
     )}
     {...props}

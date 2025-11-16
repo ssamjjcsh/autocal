@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -71,10 +72,10 @@ export default function PrincipalEqualAmortizationCalculator() {
 
       repaymentSchedule.push({
         month: i,
-        principalPayment: monthlyPrincipalPayment,
-        interestPayment: interestPayment,
-        totalPayment: totalPayment,
-        remainingBalance: remainingBalance < 0 ? 0 : remainingBalance,
+        principalPayment: Math.round(monthlyPrincipalPayment),
+        interestPayment: Math.round(interestPayment),
+        totalPayment: Math.round(totalPayment),
+        remainingBalance: Math.round(remainingBalance < 0 ? 0 : remainingBalance),
       });
       
       if (i % 12 === 0 || i === 1 || i === months) {
@@ -155,6 +156,54 @@ export default function PrincipalEqualAmortizationCalculator() {
                     <span className="text-blue-600">{formatNumber(calculationResults.totalRepayment)} 원</span>
                 </div>
             </CardContent>
+            <Tabs defaultValue="chart" className="w-full mt-4">
+                <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="chart">차트</TabsTrigger>
+                    <TabsTrigger value="details">월별 상세 내역</TabsTrigger>
+                </TabsList>
+                <TabsContent value="chart">
+                    <div style={{ width: '100%', height: 300 }}>
+                        <ResponsiveContainer>
+                            <LineChart data={calculationResults.chartData}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis tickFormatter={(value) => value.toLocaleString()} />
+                                <Tooltip formatter={(value: number) => `${value.toLocaleString()}원`} />
+                                <Legend />
+                                <Line type="monotone" dataKey="월 상환금" stroke="#8884d8" />
+                                <Line type="monotone" dataKey="상환 원금" stroke="#82ca9d" />
+                                <Line type="monotone" dataKey="상환 이자" stroke="#ffc658" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </TabsContent>
+                <TabsContent value="details">
+                    <div className="overflow-x-auto max-h-[400px] w-full">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="text-center w-[60px]">개월</TableHead>
+                                    <TableHead className="text-center">상환<br />원금</TableHead>
+                                    <TableHead className="text-center">상환<br />이자</TableHead>
+                                    <TableHead className="text-center">총<br />상환금</TableHead>
+                                    <TableHead className="text-center">대출 잔액</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {calculationResults.repaymentSchedule.map((data: RepaymentDetail) => (
+                                    <TableRow key={data.month}>
+                                        <TableCell className="whitespace-nowrap w-[60px]">{data.month}</TableCell>
+                                        <TableCell className="text-right whitespace-nowrap">{formatNumber(data.principalPayment)}</TableCell>
+                                        <TableCell className="text-right whitespace-nowrap">{formatNumber(data.interestPayment)}</TableCell>
+                                        <TableCell className="text-right whitespace-nowrap">{formatNumber(data.totalPayment)}</TableCell>
+                                        <TableCell className="text-right whitespace-nowrap">{formatNumber(data.remainingBalance)}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </TabsContent>
+            </Tabs>
         </>
       ) : (
         <div className="flex items-center justify-center text-muted-foreground h-full">

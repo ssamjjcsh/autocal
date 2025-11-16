@@ -2,12 +2,8 @@
 
 import React, { useState, useMemo } from 'react';
 import { NextPage } from 'next';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,6 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import CalculatorsLayout from '@/components/calculators/Calculatorslayout';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface RepaymentDetail {
   month: number;
@@ -193,49 +190,49 @@ const LoanInterestCalculator: NextPage = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="font-medium">총 대출 원금</div>
-              <div className="text-right">{data.totalPrincipal.toLocaleString()}원</div>
+              <div className="text-right">{formatNumber(data.totalPrincipal)}원</div>
               <div className="font-medium">총 이자</div>
-              <div className="text-right text-red-600">{data.totalInterest.toLocaleString()}원</div>
+              <div className="text-right text-red-600">{formatNumber(data.totalInterest)}원</div>
               <div className="font-medium">총 상환금액</div>
-              <div className="text-right font-bold">{data.totalRepayment.toLocaleString()}원</div>
+              <div className="text-right font-bold">{formatNumber(data.totalRepayment)}원</div>
               {data.monthlyPayment && (
                 <>
                   <div className="font-medium">
                     {title === '만기일시상환' ? '월 이자상환액' : '월 상환금'}
                   </div>
                   <div className="text-right font-bold text-blue-600">
-                    {data.monthlyPayment.toLocaleString()}원
+                    {formatNumber(data.monthlyPayment)}원
                   </div>
                 </>
               )}
               {data.firstMonthPayment && data.lastMonthPayment && (
                 <>
                   <div className="font-medium">초회차 상환금</div>
-                  <div className="text-right">{data.firstMonthPayment.toLocaleString()}원</div>
+                  <div className="text-right font-bold text-blue-600">{formatNumber(data.firstMonthPayment)}원</div>
                   <div className="font-medium">최종회차 상환금</div>
-                  <div className="text-right">{data.lastMonthPayment.toLocaleString()}원</div>
+                  <div className="text-right font-bold text-blue-600">{formatNumber(data.lastMonthPayment)}원</div>
                 </>
               )}
             </div>
             <div className="max-h-80 overflow-y-auto">
-              <Table>
+              <Table className="w-full table-fixed">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>회차</TableHead>
-                    <TableHead>월 상환금</TableHead>
-                    <TableHead>상환 원금</TableHead>
-                    <TableHead>상환 이자</TableHead>
-                    <TableHead>대출 잔액</TableHead>
+                    <TableHead className="text-center w-[35px] px-1 text-xs">개월</TableHead>
+                    <TableHead className="text-center px-1 min-w-[65px] text-xs">월<br />상환금</TableHead>
+                    <TableHead className="text-center px-1 min-w-[65px] text-xs">상환<br />원금</TableHead>
+                    <TableHead className="text-center px-1 min-w-[65px] text-xs">상환<br />이자</TableHead>
+                    <TableHead className="text-center px-1 min-w-[85px] text-xs">대출 잔액</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {data.repaymentSchedule.map((item) => (
                     <TableRow key={item.month}>
-                      <TableCell>{item.month}</TableCell>
-                      <TableCell>{item.totalPayment.toLocaleString()}</TableCell>
-                      <TableCell>{item.principalPayment.toLocaleString()}</TableCell>
-                      <TableCell>{item.interestPayment.toLocaleString()}</TableCell>
-                      <TableCell>{item.remainingBalance.toLocaleString()}</TableCell>
+                      <TableCell className="px-1 text-center whitespace-nowrap w-[35px] text-xs">{item.month}</TableCell>
+                      <TableCell className="px-1 text-center whitespace-nowrap min-w-[65px] text-xs">{formatNumber(item.totalPayment)}</TableCell>
+                      <TableCell className="px-1 text-center whitespace-nowrap min-w-[65px] text-xs">{formatNumber(item.principalPayment)}</TableCell>
+                      <TableCell className="px-1 text-center whitespace-nowrap min-w-[65px] text-xs">{formatNumber(item.interestPayment)}</TableCell>
+                      <TableCell className="px-1 text-center whitespace-nowrap min-w-[85px] text-xs">{formatNumber(item.remainingBalance)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -271,30 +268,24 @@ const LoanInterestCalculator: NextPage = () => {
   const infoSection = {
     calculatorDescription: "대출 원금, 기간, 이자율을 입력하여 상환 방식에 따른 월 상환금과 총 이자를 비교해보세요. 원리금 균등, 원금 균등, 만기일시상환 방식을 지원합니다.",
     calculationFormula: (
-        <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
-                <AccordionTrigger>원리금 균등분할상환</AccordionTrigger>
-                <AccordionContent>
-                    <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 상환금 = P * [r(1+r)^n] / [(1+r)^n - 1]</p>
-                    <p className="text-xs">P: 대출원금, r: 월이율, n: 총 상환 개월 수</p>
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-                <AccordionTrigger>원금 균등분할상환</AccordionTrigger>
-                <AccordionContent>
-                    <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 원금 상환액 = P / n</p>
-                    <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 이자 = (P - (k-1) * (P/n)) * r</p>
-                    <p className="text-xs">k: 현재 상환 회차</p>
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-                <AccordionTrigger>만기일시상환</AccordionTrigger>
-                <AccordionContent>
-                    <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 이자 = P * r</p>
-                    <p className="text-xs">만기일에 원금 전액 상환</p>
-                </AccordionContent>
-            </AccordionItem>
-        </Accordion>
+        <div className="space-y-4">
+            <div>
+                <h3 className="font-semibold text-md mb-2">원리금 균등분할상환</h3>
+                <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 상환금 = P * [r(1+r)^n] / [(1+r)^n - 1]</p>
+                <p className="text-xs">P: 대출원금, r: 월이율, n: 총 상환 개월 수</p>
+            </div>
+            <div>
+                <h3 className="font-semibold text-md mb-2">원금 균등분할상환</h3>
+                <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 원금 상환액 = P / n</p>
+                <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 이자 = (P - (k-1) * (P/n)) * r</p>
+                <p className="text-xs">k: 현재 상환 회차</p>
+            </div>
+            <div>
+                <h3 className="font-semibold text-md mb-2">만기일시상환</h3>
+                <p className="font-mono p-2 bg-muted rounded-md my-2 text-sm">월 이자 = P * r</p>
+                <p className="text-xs">만기일에 원금 전액 상환</p>
+            </div>
+        </div>
     ),
     usefulTips: "원금 균등상환 방식이 총 이자 부담이 가장 적지만 초기 상환 부담이 큽니다. 원리금 균등상환은 매월 동일한 금액을 상환하여 계획적인 자금 관리에 유리합니다. 만기일시상환은 월 부담이 가장 적지만 총 이자 비용은 가장 높습니다. 자신의 자금 상황에 맞는 상환 방식을 선택하는 것이 중요합니다."
   };

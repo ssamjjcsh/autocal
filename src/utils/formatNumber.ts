@@ -1,6 +1,6 @@
 export const formatNumber = (value: number | string): string => {
   if (typeof value === 'number') {
-    return value.toLocaleString('ko-KR');
+    return Math.round(value).toLocaleString('ko-KR', { maximumFractionDigits: 0 });
   }
   return value;
 };

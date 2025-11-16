@@ -11,8 +11,8 @@ export const calculatorCategories = [
         id: 'interest-loan',
         name: '이자 및 대출 계산기',
         calculators: [
-          { id: 'loan-calculator', name: '대출 계산기', href: '/calculators/finance/loan-calculator' },
-          { id: 'interest-calculator', name: '이자 계산기', href: '/calculators/finance/interest-calculator' },
+          
+          { id: 'loan-interest', name: '대출 이자 계산기', href: '/calculators/finance/loan-interest' },
           { id: 'early-repayment-fee', name: '중도상환수수료 계산기', href: '/calculators/finance/early-repayment-fee' },
           { id: 'dti', name: 'DTI 계산기', href: '/calculators/finance/dti' },
           { id: 'installment-interest', name: '할부이자 계산기', href: '/calculators/finance/installment-interest' },
@@ -20,7 +20,7 @@ export const calculatorCategories = [
           { id: 'installment-savings-monthly-compound-interest', name: '적립식 월 복리 계산기', href: '/calculators/finance/installment-savings-monthly-compound-interest' },
           { id: 'principal-equal-amortization', name: '원금 균등상환 계산기', href: '/calculators/finance/principal-equal-amortization' },
           { id: 'principal-and-interest-equal-repayment', name: '원리금 균등상환 계산기', href: '/calculators/finance/principal-and-interest-equal-repayment' },
-          { id: 'loan-interest', name: '대출 이자 계산기', href: '/calculators/finance/loan-interest' },
+
         ],
       },
       {
@@ -203,14 +203,14 @@ export const calculatorCategories = [
         name: '재질 속성',
         calculators: [
           { id: 'materials', name: '재질 데이터베이스', href: '/calculators/material/materials' },
-          { id: 'property', name: '재질 속성 조회', href: '/calculators/material/property' },
+
         ],
       },
       {
         id: 'material-comparison',
         name: '재질별 물성',
         calculators: [
-          { id: 'comparison', name: '재질 스펙 비교', href: '/calculators/material/comparison' },
+          { id: 'comparison', name: '재질 물성 비교', href: '/calculators/material/comparison' },
         ],
       },
       {

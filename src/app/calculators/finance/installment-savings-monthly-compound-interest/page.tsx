@@ -2,12 +2,7 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { NextPage } from 'next';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -140,46 +135,50 @@ const InstallmentSavingsMonthlyCompoundInterestCalculator: NextPage = () => {
   const resultSection = (
     <>
       {result ? (
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>계산 결과</CardTitle>
+        <div className="space-y-4">
+          <Card className="p-2">
+            <CardHeader className="p-2">
+              <CardTitle className="text-lg">계산 결과</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-2 p-2">
               <div className="flex justify-between">
-                <span className="font-medium">총 원금</span>
-                <span>{result.totalPrincipal.toLocaleString()}원</span>
+                <span className="font-medium text-sm">총 원금</span>
+                <span className="text-base">{result.totalPrincipal.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">총 이자 (세전)</span>
-                <span className="text-blue-500">{result.totalInterest.toLocaleString()}원</span>
+                <span className="font-medium text-sm">총 이자 (세전)</span>
+                <span className="text-blue-500 text-base">{result.totalInterest.toLocaleString()}원</span>
               </div>
               <Separator />
-              <div className="flex justify-between text-lg font-bold">
+              <div className="flex justify-between text-base font-bold">
                 <span>만기지급금액</span>
-                <span className="text-primary">{result.totalAmount.toLocaleString()}원</span>
+                <span className="text-xl font-bold text-primary">{result.totalAmount.toLocaleString()}원</span>
               </div>
             </CardContent>
           </Card>
           
-          <div style={{ width: '100%', height: 300 }}>
-            <ResponsiveContainer>
-              <LineChart data={result.chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis tickFormatter={(value) => value.toLocaleString()} />
-                <Tooltip formatter={(value: number) => `${value.toLocaleString()}원`} />
-                <Legend />
-                <Line type="monotone" dataKey="원금" stroke="#8884d8" />
-                <Line type="monotone" dataKey="이자와원금" stroke="#82ca9d" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>월별 상세 내역 보기</AccordionTrigger>
-              <AccordionContent>
+          <Tabs defaultValue="chart" className="w-full mt-4">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="chart">차트</TabsTrigger>
+              <TabsTrigger value="details">월별 상세 내역</TabsTrigger>
+            </TabsList>
+            <TabsContent value="chart">
+              <div style={{ width: '100%', height: 300 }}>
+                <ResponsiveContainer>
+                  <LineChart data={result.chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis tickFormatter={(value) => value.toLocaleString()} />
+                    <Tooltip formatter={(value: number) => `${value.toLocaleString()}원`} />
+                    <Legend />
+                    <Line type="monotone" dataKey="원금" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="이자와원금" stroke="#82ca9d" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </TabsContent>
+            <TabsContent value="details">
+              <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -200,9 +199,9 @@ const InstallmentSavingsMonthlyCompoundInterestCalculator: NextPage = () => {
                     ))}
                   </TableBody>
                 </Table>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       ) : (
         <div className="flex items-center justify-center text-muted-foreground h-full">

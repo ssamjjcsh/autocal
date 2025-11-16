@@ -3,6 +3,8 @@ import CalculatorSearch from '@/components/calculators/CalculatorSearch';
 import CalculatorCategories from '@/components/calculators/CalculatorCategories';
 import ScientificCalculator from '@/components/calculators/ScientificCalculator';
 import FooterSection from '@/components/sections/FooterSection';
+import { Card, CardContent } from "@/components/ui/card";
+import CombinedUnitConverter from '@/components/calculators/CombinedUnitConverter';
 
 
 export default function Home() {
@@ -21,14 +23,14 @@ export default function Home() {
 
         <section className="text-center mt-12">
           <p className="mt-4 text-lg text-gray-500 dark:text-gray-600 sm:text-xl">
-            금융, 건강, 생활 등 다양한 분야의 계산기를 지금 바로 만나보세요.
+            금융, 건강, 생활, 엔지니어링 등 다양한 분야의 계산기를 지금 바로 만나보세요.
           </p>
         </section>
 
         <AllCalculators />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="lg:col-span-1">
-            {/* 첫 번째 칸 - 비워둠 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-stretch">
+          <div className="lg:col-span-1 h-full">
+            <CombinedUnitConverter />
           </div>
           <div className="lg:col-span-1">
             <ScientificCalculator />

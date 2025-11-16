@@ -14,7 +14,7 @@ const unitCategories = {
   group2: group2.map(id => ({ id, name: UNIT_DEFINITIONS[id]?.name || id })),
 };
 
-export const NewUnitConverter = ({ category }: { category: string }) => {
+const NewUnitConverter = ({ category }: { category: string }) => {
   const categoryData = UNIT_DEFINITIONS[category];
   
   const units = useMemo(() => {
