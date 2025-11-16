@@ -69,7 +69,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
             placeholder="계산기 검색..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 text-lg border-gray-300 rounded-full shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+            className="w-full px-4 py-3 text-lg border-gray-300 rounded-full shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:text-white"
           />
         </div>
 
