@@ -78,7 +78,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
             const Icon = ICONS[subcategory.id] || ICONS.default;
             return (
               <Card key={subcategory.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
-                <CardHeader className="bg-gray-50 dark:bg-gray-700/50 p-6">
+                <CardHeader className="bg-gray-50 dark:bg-gray-700/50 p-3">
                   <div className="flex items-center space-x-4">
                     <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full">
                       {React.createElement(Icon, { className: "w-6 h-6 text-blue-600 dark:text-blue-400" })}
