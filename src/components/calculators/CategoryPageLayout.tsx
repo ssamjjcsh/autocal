@@ -81,7 +81,7 @@ const CategoryPageLayout: React.FC<CategoryPageLayoutProps> = ({ category }) => 
                 <CardHeader className="bg-gray-50 dark:bg-gray-700/50 p-3">
                   <div className="flex items-center space-x-4">
                     <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full">
-                      {React.createElement(Icon, { className: "w-5 h-5 text-blue-600 dark:text-blue-400" })}}
+                      <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">{subcategory.name}</CardTitle>
                   </div>

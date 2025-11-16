@@ -28,13 +28,18 @@ const NewUnitConverter = ({ category }: { category: string }) => {
   const [convertedValues, setConvertedValues] = useState<{[key: string]: number}>({});
 
   useEffect(() => {
-    if (categoryData) {
+    if (categoryData && units.length > 0) {
       setFromUnit(units[0]);
+    } else {
+      setFromUnit(''); // units가 비어있으면 fromUnit을 빈 문자열로 초기화
     }
   }, [units, categoryData]);
 
   useEffect(() => {
-    if (!categoryData) return;
+    if (!categoryData || !fromUnit || !units.includes(fromUnit)) {
+      setConvertedValues({});
+      return;
+    }
     const value = parseFloat(fromValue);
     if (!isNaN(value)) {
       const newValues: {[key: string]: number} = {};
